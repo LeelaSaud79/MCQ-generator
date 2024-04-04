@@ -17,6 +17,10 @@ from models.mcq import post_mca_questions
 app = Flask(__name__)
 # CORS(app)
 
+
+def count_words(text):
+    return len(text.split())
+
 @app.route("/")
 def index():
 	return render_template("index.html")
@@ -29,6 +33,9 @@ def submit():
         text_input = request.form.get("textInput")
 
         if text_input:
+            if count_words(text_input) > 100:
+                return jsonify({"error": "Word limit exceeded. Maximum 100 words allowed."}), 400
+            
             final_questions = post_mca_questions(text_input, num_questions=10)
             # Split the text into individual questions
             questions = [q.strip() for q in final_questions.split(",")]
