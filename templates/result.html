@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+</head>
+<body>
+    <h1>Result</h1>
+    <form method="post" action="/view_answer">
+        {% for question, options, correct_answer in questions %}
+        <div class="question">
+            <p>{{ question }}</p>
+            {% for option in options %}
+            <input type="radio" name="{{ question }}" value="{{ option }}"> {{ option }}<br>
+            {% endfor %}
+        </div>
+        <br>
+        {% endfor %}
+        <button type="submit">View Correct Answers</button>
+    </form>
+</body>
+</html>

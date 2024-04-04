@@ -13,7 +13,7 @@ from flask import Flask, render_template, request, make_response
 #import time
 
 #import warnings # To ignore the warnings warnings.filterwarnings("ignore")
-from models.mcq import post_mca_questions
+#from models.mcq import post_mca_questions
 app = Flask(__name__)
 # CORS(app)
 
@@ -34,18 +34,18 @@ def submit():
             if count_words(text_input) > 100:
                 return jsonify({"error": "Word limit exceeded. Maximum 100 words allowed."}), 400
             
-            #final_questions = ['What plays a pivotal role in shaping the trajectory of human development?(a)education(b)navigate life(c)confidence necessary(d)educationCorrect answer is : (d)', 'What does Eric liu believe education is intrinsically linked to?(a)education(b)navigate life(c)navigate life(d)education significantly impacts healthCorrect answer is : (c)', 'What does Eric liu believe is the most important factor in human development?(a)education(b)navigate life(c)confidence necessary(d)education significantly impacts healthCorrect answer is : (c)', 'How does Eric liu feel about health and well being?(a)education(b)navigate life(c)education significantly impacts health(d)education significantly impacts healthCorrect answer is : (c)', 'What does Eric liu believe education does?(a)education(b)empower individuals(c)confidence necessary(d)education significantly impacts healthCorrect answer is : (b)']
-            final_questions = post_mca_questions(text_input, num_questions=10)
+            final_questions = ['What plays a pivotal role in shaping the trajectory of human development?(a)education(b)navigate life(c)confidence necessary(d)educationCorrect answer is : (d)', 'What does Eric liu believe education is intrinsically linked to?(a)education(b)navigate life(c)navigate life(d)education significantly impacts healthCorrect answer is : (c)', 'What does Eric liu believe is the most important factor in human development?(a)education(b)navigate life(c)confidence necessary(d)education significantly impacts healthCorrect answer is : (c)', 'How does Eric liu feel about health and well being?(a)education(b)navigate life(c)education significantly impacts health(d)education significantly impacts healthCorrect answer is : (c)', 'What does Eric liu believe education does?(a)education(b)empower individuals(c)confidence necessary(d)education significantly impacts healthCorrect answer is : (b)']
+            #final_questions = post_mca_questions(text_input, num_questions=10)
             parsed_questions = []
             for question_data in final_questions:
-                # Split the question data into question and answer parts
-                parts = question_data.rsplit('Correct answer is : ', 1)
-                question_with_options = parts[0]
-                correct_answer = parts[1].strip()
+                # Split the question data into question and options
+                question_parts = question_data.split("?")
+                question = question_parts[0].strip() + "?"
 
-                # Extract question and options
-                question = question_with_options.split('(', 1)[0].strip()
-                options = [opt.strip() for opt in question_with_options.split(')')[0].split('(', 1)[1].split(')') if opt.strip()]
+                options_parts = question_parts[1].split("Correct answer is : ")
+                options = options_parts[0].strip().split("(")[1:]
+
+                correct_answer = options_parts[1].strip().split(":")[-1].strip()
 
                 parsed_questions.append((question, options, correct_answer))
 
