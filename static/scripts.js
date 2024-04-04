@@ -19,7 +19,7 @@ $(document).ready(function () {
         console.log('input : ', paragraph, num)
 
         if ((paragraph.split(" ")).length < 200) {
-            alert(Paragraph should me minimum 200 words!)
+            alert("Paragraph should me minimum 200 words!")
         }
 
         else {
