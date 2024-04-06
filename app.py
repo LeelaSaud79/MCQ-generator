@@ -1,24 +1,21 @@
-from flask import Flask, request, jsonify
-#import requests
-#import os
-from flask import Flask, render_template, request, make_response
-#import pandas as pd
-#import numpy as np          # For mathematical calculations
-#import matplotlib.pyplot as plt  # For plotting graphs
-#from datetime import datetime    # To access datetime
-#from pandas import Series        # To work on series
-#import csv
-#import io
-
-#import time
-
-#import warnings # To ignore the warnings warnings.filterwarnings("ignore")
+from flask import Flask, request, jsonify, render_template, session, redirect
 from models.mcq import post_mca_questions
+from sense2vec import Sense2Vec
+import os
+
 app = Flask(__name__)
-# CORS(app)
+app.secret_key = 'your_secret_key_here'  # Set a secret key for session management
 
 def count_words(text):
     return len(text.split())
+
+# Load Sense2Vec model
+if os.path.exists("s2v_old"):
+    s2v = Sense2Vec().from_disk('s2v_old')
+    print("Sense2Vec model loaded successfully.")
+else:
+    print("Sense2Vec model file 's2v_old' not found.")
+    s2v = None
 
 @app.route("/")
 def index():
@@ -26,19 +23,22 @@ def index():
 
 @app.route("/submit", methods=["POST"])
 def submit():
-    global parsed_questions 
     if request.method == "POST":
         text_input = request.form.get("textInput")
+        print("Received text input:", text_input)
 
         if text_input:
             if count_words(text_input) > 100:
                 return jsonify({"error": "Word limit exceeded. Maximum 100 words allowed."}), 400
-            
-            #final_questions = ['What plays a pivotal role in shaping the trajectory of human development?(a)education(b)navigate life(c)confidence necessary(d)educationCorrect answer is : (d)', 'What does Eric liu believe education is intrinsically linked to?(a)education(b)navigate life(c)navigate life(d)education significantly impacts healthCorrect answer is : (c)', 'What does Eric liu believe is the most important factor in human development?(a)education(b)navigate life(c)confidence necessary(d)education significantly impacts healthCorrect answer is : (c)', 'How does Eric liu feel about health and well being?(a)education(b)navigate life(c)education significantly impacts health(d)education significantly impacts healthCorrect answer is : (c)', 'What does Eric liu believe education does?(a)education(b)empower individuals(c)confidence necessary(d)education significantly impacts healthCorrect answer is : (b)']
-            final_questions = post_mca_questions(text_input, num_questions=10)
+
+            final_questions = post_mca_questions(text_input, s2v, num_questions=5)
+            print("Generated MCQs:", final_questions)
+
+            # Store final_questions in session
+            session['final_questions'] = final_questions
+
             parsed_questions = []
             for question_data in final_questions:
-                # Split the question data into question and options
                 question_parts = question_data.split("?")
                 question = question_parts[0].strip() + "?"
 
@@ -55,13 +55,20 @@ def submit():
     else:
         return "Method not allowed."
 
-
-
-@app.route("/view_answer", methods=["GET", "POST"])
+@app.route("/view_answer")
 def view_answer():
-    global parsed_questions  # Access the global variable
-    return render_template("view_answer.html", questions=parsed_questions)
+    # Retrieve final_questions from session
+    final_questions = session.get('final_questions', None)
+    if final_questions:
+        # Split each element into a question and a correct answer
+        questions = [question_answer.split('\n') for question_answer in final_questions]
+        return render_template("view_answer.html", questions=questions)
+    else:
+        return "No MCQs generated."
 
+@app.route("/submit_answers", methods=["POST"])
+def submit_answers():
+    return redirect("/view_answer")
 
 if __name__ == '__main__':
     app.run(debug=True)

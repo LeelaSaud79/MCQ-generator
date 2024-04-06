@@ -7,14 +7,9 @@
 </head>
 <body>
     <h1>View Answers</h1>
-    {% for question, options, correct_answer in questions %}
+    {% for question, correct_answer in questions %}
     <div class="question">
         <p>Question: {{ question }}</p>
-        <p>Options:
-            {% for option in options %}
-            {{ option }}<br>
-            {% endfor %}
-        </p>
         <p>Correct Answer: {{ correct_answer }}</p>
     </div>
     <br>
