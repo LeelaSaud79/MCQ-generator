@@ -10,7 +10,7 @@ db =  UserDatabase(host="localhost", user="root", password="Sim@nta2023", databa
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'  # Set a secret key for session management
-limiter = Limiter(app, default_limits=100)
+limiter = Limiter(app, default_limits=["10 per minute"])
 def count_words(text):
     return len(text.split())
 
@@ -20,20 +20,22 @@ def before_request():
     # This decorator applies rate limiting to all routes
     limiter.limit("10/minute")(lambda: None)()
 
-# @app.before_request
-# def add_custom_header():
-#     print(request)
-#     if request.path != '/' and not request.path.endswith('.html'):
-#         x_custom_passcode = request.headers.get("code")
-#         if x_custom_passcode != 'abc':
-#             return jsonify({
-#                 "success": False,
-#                 "code": '400',
-#                 "error": 'Unauthorized',
-#                 "message": 'Missing Authorization',
-#                 "traceback": '',
-#                 "description": ''
-#             })
+@app.before_request
+def add_custom_header():
+    print(request)
+    if request.path != '/' and not request.path.endswith('.html'):
+        referer = request.headers.get('Referer')
+        #x_custom_passcode = request.headers.get("code")
+        if referer is None or not referer.startswith('http://127.0.0.1:5000'):
+        # if x_custom_passcode != 'abc':
+            return jsonify({
+                "success": False,
+                "code": '400',
+                "error": 'Unauthorized',
+                "message": 'Missing Authorization',
+                "traceback": '',
+                "description": ''
+            })
         
 # Load Sense2Vec model
 if os.path.exists("s2v_old"):
