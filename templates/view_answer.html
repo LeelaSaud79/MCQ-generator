@@ -4,16 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Answers</title>
+    <style>
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <h1>View Answers</h1>
-    {% for question, correct_answer in questions %}
+    {% for question, options, selected_answer, correct_answer, result in zipped_data %}
     <div class="question">
         <p>Question: {{ question }}</p>
+        <p>Options:</p>
+        <ul>
+            {% for option in options %}
+            <li>{{ option }}</li>
+            {% endfor %}
+        </ul>
+        <p>Selected Answer: {{ selected_answer }}</p>
         <p>Correct Answer: {{ correct_answer }}</p>
+        <p>Result: {% if result == "Correct" %} <span class="correct">Correct</span> {% else %} <span class="incorrect">Incorrect</span> {% endif %}</p>
     </div>
-    <br>
     {% endfor %}
-    <a href="/">Back</a>
+    <br>
+    <a href="/">Back to Home</a>
 </body>
 </html>
