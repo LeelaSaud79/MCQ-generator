@@ -15,7 +15,6 @@
 </head>
 <body>
     <h1>View Answers</h1>
-<<<<<<< HEAD
     {% for question, options, selected_answer, correct_answer, result in zipped_data %}
     <div class="question">
         <p>Question: {{ question }}</p>
@@ -26,29 +25,11 @@
             {% endfor %}
         </ul>
         <p>Selected Answer: {{ selected_answer }}</p>
-=======
-<<<<<<< HEAD
-    {% for question, options, selected_answer, correct_answer, result in zipped_data %}
-    <div class="question">
-        <p>Question: {{ question }}</p>
-        <p>Options:</p>
-        <ul>
-            {% for option in options %}
-            <li>{{ option }}</li>
-            {% endfor %}
-        </ul>
-        <p>Selected Answer: {{ selected_answer }}</p>
-=======
-    {% for question, correct_answer in questions %}
-    <div class="question">
-        <p>Question: {{ question }}</p>
->>>>>>> dd92ee7abd8f322f82f8b91a57e928d8553e5823
->>>>>>> 4b1f61f3d8fff8d48c1af488fe57c4c2d96c9e74
         <p>Correct Answer: {{ correct_answer }}</p>
-        <p>Result: {% if result == "Correct" %} <span class="correct">Correct</span> {% else %} <span class="incorrect">Incorrect</span> {% endif %}</p>
+        <p>Result: {% if result == "Correct" %}<span class="correct">Correct</span>{% else %}<span class="incorrect">Incorrect</span>{% endif %}</p>
     </div>
-    {% endfor %}
     <br>
+    {% endfor %}
     <a href="/">Back to Home</a>
 </body>
 </html>

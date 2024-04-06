@@ -7,27 +7,17 @@
 </head>
 <body>
     <h1>Result</h1>
-<<<<<<< HEAD
     <form method="post" action="/view_answer">
-=======
-<<<<<<< HEAD
-    <form method="post" action="/view_answer">
-        {% for index, (question, options, correct_answer) in enumerated_questions %}
-=======
-    <form method="post" action="/submit_answers">
->>>>>>> 4b1f61f3d8fff8d48c1af488fe57c4c2d96c9e74
         {% for question, options, correct_answer in questions %}
->>>>>>> dd92ee7abd8f322f82f8b91a57e928d8553e5823
         <div class="question">
             <p>{{ question }}</p>
             {% for option in options %}
-            <input type="radio" name="question_{{ index }}" value="{{ option }}"> {{ option }}<br>
+            <input type="radio" name="{{ question }}" value="{{ option }}"> {{ option }}<br>
             {% endfor %}
-            <input type="hidden" name="correct_answer_{{ index }}" value="{{ correct_answer }}">
         </div>
         <br>
         {% endfor %}
-        <button type="submit">Submit Answers</button>
+        <button type="submit">View Correct Answers</button>
     </form>
 </body>
 </html>
