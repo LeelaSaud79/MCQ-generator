@@ -172,7 +172,7 @@ def post_mca_questions(context: str, s2v, num_questions: int = 5):
         if len(distractors) == 0:
             distractors = imp_keywords
         if len(distractors) > 0:
-            random_integer = random.randint(0, 4)
+            random_integer = random.randint(0, 3)
             alpha_list = ['(a)', '(b)', '(c)', '(d)']
             for d, distractor in enumerate(distractors[:4]):
                 if d == random_integer:
