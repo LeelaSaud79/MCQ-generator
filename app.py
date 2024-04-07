@@ -6,7 +6,7 @@ import csv
 from flask import Flask, request, jsonify, render_template, session, redirect
 import sqlite3
 from utils.db_helper import UserDatabase
-db =  UserDatabase(host="localhost", user="root", password="Sim@nta2023", database="MCQ")
+db =  UserDatabase(host="localhost", user="root", password="", database="data")
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'  # Set a secret key for session management

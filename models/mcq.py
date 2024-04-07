@@ -171,14 +171,17 @@ def post_mca_questions(context: str, s2v, num_questions: int = 5):
         output = output + ques + "\n"
         if len(distractors) == 0:
             distractors = imp_keywords
+            print(distractors)
         if len(distractors) > 0:
             random_integer = random.randint(0, 3)
             alpha_list = ['(a)', '(b)', '(c)', '(d)']
             for d, distractor in enumerate(distractors[:4]):
                 if d == random_integer:
                     output = output + alpha_list[d] + answer + "\n"
-                else:
+                elif distractor!=answer:
                     output = output + alpha_list[d] + distractor + "\n"
+                else:
+                    output = output + alpha_list[d] + distractors[5] + "\n"
             output = output + "Correct answer is : " + alpha_list[random_integer] + "\n\n"
         output_list.append(output)
         if len(output_list) == num_questions:
