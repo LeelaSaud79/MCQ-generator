@@ -16,11 +16,12 @@
 <body>
     <h1>Result</h1>
     <form method="post" action="/view_answer">
-        {% for question, options, correct_answer in questions %}
+        {% for i, (question, options, correct_answer) in enumerate(questions) %}
         <div class="question">
             <p>{{ question }}</p>
-            {% for option in options %}
-            <input type="radio" name="{{ question }}" value="{{ option }}"> {{ option }}<br>
+            {% for j, option in enumerate(options) %}
+            <input type="radio" id="option_{{ i }}_{{ j }}" name="question_{{ i }}" value="{{ option }}"> 
+            <label for="option_{{ i }}_{{ j }}">{{ option }}</label><br>
             {% endfor %}
         </div>
         <br>
