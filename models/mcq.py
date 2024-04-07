@@ -160,6 +160,8 @@ def post_distractors(word, original_sentence, sense2vec_model, sentence_model, t
     final = final[1:]
     return final
 
+import random
+
 def post_mca_questions(context: str, s2v, num_questions: int = 5):
     summarized_text = summarizer(context, summary_model, summary_tokenizer)
     imp_keywords = post_keywords(context)
@@ -174,12 +176,12 @@ def post_mca_questions(context: str, s2v, num_questions: int = 5):
         if len(distractors) > 0:
             random_integer = random.randint(0, 3)
             alpha_list = ['(a)', '(b)', '(c)', '(d)']
-            for d, distractor in enumerate(distractors[:4]):
-                if d == random_integer:
-                    output = output + alpha_list[d] + answer + "\n"
-                else:
-                    output = output + alpha_list[d] + distractor + "\n"
-            output = output + "Correct answer is : " + alpha_list[random_integer] + "\n\n"
+            options = [answer] + distractors[:3]
+            random.shuffle(options)
+            for d, option in enumerate(options):
+                output = output + alpha_list[d] + option + "\n"
+            correct_answer_index = options.index(answer)
+            output = output + "Correct answer is : " + alpha_list[correct_answer_index] + "\n\n"
         output_list.append(output)
         if len(output_list) == num_questions:
             break

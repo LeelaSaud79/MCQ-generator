@@ -6,6 +6,30 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <title>User Registration</title>
+    <script>
+        function validateForm() {
+            var username = document.getElementById("username").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            if (username.trim() === "") {
+                alert("Username cannot be blank");
+                return false;
+            }
+
+            if (email.trim() === "") {
+                alert("Email address cannot be blank");
+                return false;
+            }
+
+            if (password.trim() === "") {
+                alert("Password cannot be blank");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -18,7 +42,7 @@
         </div>
         {% endif %}
         
-        <form id="registerForm" action="/register" method="POST">
+        <form id="registerForm" action="/register" method="POST" onsubmit="return validateForm()">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" name="username" class="form-control" id="username" placeholder="Enter username">

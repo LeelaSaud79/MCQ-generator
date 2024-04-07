@@ -20,7 +20,7 @@
                         class="img-fluid" alt="Sample image">
                 </div>
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                    <form id="loginForm" action="/login" method="POST">
+                    <form id="loginForm" action="/login" method="POST" onsubmit="return validateForm()">
                         <!-- Email input -->
                         <div class="form-outline mb-4">
                             <input type="email" name="email" id="email" class="form-control form-control-lg"
@@ -60,6 +60,25 @@
             </div>
         </div>
     </section>
+
+    <script>
+        function validateForm() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            if (email.trim() === "") {
+                alert("Email address cannot be blank");
+                return false;
+            }
+
+            if (password.trim() === "") {
+                alert("Password cannot be blank");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </body>
 
 </html>
