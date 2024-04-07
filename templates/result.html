@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Result</title>
+    <style>
+        @media print {
+            #downloadButton,
+            button[type="submit"] {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
     <h1>Result</h1>
@@ -18,6 +26,13 @@
         <br>
         {% endfor %}
         <button type="submit">View Correct Answers</button>
+        <button id="downloadButton" onclick="downloadPDF()">Download as PDF</button>
+    
+        <script>
+            function downloadPDF() {
+                window.print();
+            }
+        </script>
     </form>
 </body>
 </html>
