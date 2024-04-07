@@ -46,8 +46,8 @@
             var textInput = document.getElementById('textInput').value.trim();
             var wordCount = textInput.split(/\s+/).length;
 
-            if (wordCount > 500) {
-                alert('Word limit exceeded. Maximum 500 words allowed.');
+            if (wordCount < 50 || wordCount > 500) {
+                alert('Word count must be between 50 and 500 words.');
                 event.preventDefault(); // Prevent the form from submitting
             } else if (textInput === '') {
                 alert('Please enter some text to generate MCQs.');

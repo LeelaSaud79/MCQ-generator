@@ -13,7 +13,8 @@ app.secret_key = 'your_secret_key_here'  # Set a secret key for session manageme
 limiter = Limiter(app, default_limits=["10 per minute"])
 def count_words(text):
     return len(text.split())
-
+# Pass the enumerate function to Jinja2 environment
+app.jinja_env.globals['enumerate'] = enumerate
 # Add a before_request function for global rate limiting
 @app.before_request
 def before_request():
@@ -78,8 +79,9 @@ def register():
         user = db.check_user(email, password)
         if not user:
             db.insert_user(username,email, password)
-
-        return redirect("/login")
+            return redirect("/login")
+        else:
+            return render_template("register.html", error="Already Registered")
     return render_template("register.html")
 
 
@@ -95,8 +97,8 @@ def submit():
         print("Received text input:", text_input)
 
         if text_input:
-            if count_words(text_input) > 100:
-                return jsonify({"error": "Word limit exceeded. Maximum 100 words allowed."}), 400
+            if count_words(text_input) > 500 and count_words(text_input) < 50:
+                return jsonify({"error": "Word limit exceeded. Maximum 500 words allowed."}), 400
 
             #final_questions = post_mca_questions(text_input, s2v, num_questions=10)
             final_questions = [
@@ -128,23 +130,27 @@ def submit():
             return "No data received."
     else:
         return "Method not allowed."
+    
 
 @app.route("/view_answer", methods=["POST"])
 def view_answer():
     correct_answers = []
-    for i, (question, options, correct_answer) in enumerate(parsed_questions, start=1):
+    for i, (question, options, correct_answer) in enumerate(parsed_questions, start=0):
         selected_option = request.form.get(f"question_{i}")
         if selected_option is not None:
-            selected_answer = selected_option.split(')')[1].strip()  # Extract and strip the selected option
-            if selected_answer.lower() == correct_answer.lower():
+            selected_answer = selected_option.split(')')[0].strip()  # Extract and strip the selected option
+            if selected_answer.lower() in correct_answer.lower():
                 result = "Correct"
             else:
                 result = "Incorrect"
-            correct_answers.append((question, options, selected_answer, correct_answer, result))
         else:
-            correct_answers.append((question, options, "No option selected", correct_answer, "Incorrect"))
+            selected_answer = "No option selected"
+            result = "Incorrect"
+
+        correct_answers.append((question, options, selected_answer, correct_answer, result))
 
     return render_template("view_answer.html", zipped_data=correct_answers)
+
 
 if __name__ == '__main__':
     db.create_table()
