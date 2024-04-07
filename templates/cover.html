@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cover Page</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif; /* Changed font to Arial */
+        }
+        .container {
+            display: flex;
+            height: 100%;
+        }
+        .left-half {
+            width: 50%;
+            background-size: cover;
+            background-position: center;
+        }
+        .left-half img {
+            width: 100%; /* Set the width to 50% of its container */
+           height: 100%; /* Automatically adjust the height to maintain aspect ratio */
+          }
+        .right-half {
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+        }
+        .content h1 {
+            font-size: 5rem; /* Changed font size */
+            font-weight: bold; /* Corrected font weight */
+            font-family: Helvetica, Arial, sans-serif; /* Added Arial */
+            color: darkblue;
+            margin-bottom: 2rem; /* Adjusted margin */
+        }
+        .content p {
+            font-size: 1.125rem; /* Changed font size */
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 0.75rem 1.5rem; /* Adjusted padding */
+            font-size: 1.125rem; /* Changed font size */
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 15px; /* Added border-radius */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none; /* Corrected button appearance */
+            display: inline-block; /* Corrected button appearance */
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-half">
+            <img src="{{ url_for('static', filename='AI.jpg') }}" alt="Image">
+        </div>
+        <div class="right-half">
+            <div class="content">
+                <h1>Create Different Multiple Choice Questions in One Click</h1>
+                <p>For teachers, schools, and HR</p><br> <!-- Corrected spacing -->
+                <form action="/login" method="GET">
+                    <button type="submit" class="btn">Click Here and Enjoy</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
