@@ -79,8 +79,9 @@ def register():
         user = db.check_user(email, password)
         if not user:
             db.insert_user(username,email, password)
-
-        return redirect("/login")
+            return redirect("/login")
+        else:
+            return render_template("register.html", error="Already Registered")
     return render_template("register.html")
 
 
@@ -96,8 +97,8 @@ def submit():
         print("Received text input:", text_input)
 
         if text_input:
-            if count_words(text_input) > 100:
-                return jsonify({"error": "Word limit exceeded. Maximum 100 words allowed."}), 400
+            if count_words(text_input) > 500 and count_words(text_input) < 50:
+                return jsonify({"error": "Word limit exceeded. Maximum 500 words allowed."}), 400
 
             #final_questions = post_mca_questions(text_input, s2v, num_questions=10)
             final_questions = [
