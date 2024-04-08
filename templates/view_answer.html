@@ -11,12 +11,26 @@
         .incorrect {
             color: red;
         }
+        .result-container {
+            margin-bottom: 20px;
+        }
+        .failed {
+            color: red;
+        }
+        .passed {
+            color: green;
+        }
+        .score {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
     </style>
 </head>
 <body>
     <h1>View Answers</h1>
     {% for question, options, selected_answer, correct_answer, result in zipped_data %}
-    <div class="question">
+    <div class="result-container">
         <p>Question: {{ question }}</p>
         <p>Options:</p>
         <ul>
@@ -28,8 +42,14 @@
         <p>Correct Answer: {{ correct_answer }}</p>
         <p>Result: {% if result == "Correct" %}<span class="correct">Correct</span>{% else %}<span class="incorrect">Incorrect</span>{% endif %}</p>
     </div>
-    <br>
     {% endfor %}
+    <p class="score">
+        {% if percentage < 40 %}
+            <span class="failed">SCORE: {{ percentage|round|int }}% Failed</span>
+        {% else %}
+            <span class="passed">SCORE: {{ percentage|round|int }}% Passed</span>
+        {% endif %}
+    </p>
     <a href="/index">Back to Home</a>
 </body>
 </html>
