@@ -1,7 +1,7 @@
 from sense2vec import Sense2Vec
 import os
 from flask_limiter import Limiter
-#from models.mcq import post_mca_questions
+from models.mcq import post_mca_questions
 import csv
 from flask import Flask, request, jsonify, render_template, session, redirect
 import sqlite3
@@ -9,7 +9,7 @@ from utils.db_helper import UserDatabase
 db =  UserDatabase(host="localhost", user="root", password="", database="project")
 
 app = Flask(__name__)
-# app.secret_key = 'your_secret_key_here'  # Set a secret key for session management
+app.secret_key = 'your_secret_key_here'  # Set a secret key for session management
 limiter = Limiter(app, default_limits=["10 per minute"])
 def count_words(text):
     return len(text.split())
@@ -100,14 +100,14 @@ def submit():
             if count_words(text_input) > 500 and count_words(text_input) < 50:
                 return jsonify({"error": "Word limit exceeded. Maximum 500 words allowed."}), 400
 
-            #final_questions = post_mca_questions(text_input, s2v, num_questions=10)
-            final_questions = [
-            'What plays a pivotal role in shaping the trajectory of human development?(a)education(b)navigate life(c)confidence necessary(d)educationCorrect answer is : (d)',
-            'What does Eric liu believe education is intrinsically linked to?(a)education(b)navigate life(c)navigate life(d)education significantly impacts healthCorrect answer is : (c)',
-            'What does Eric liu believe is the most important factor in human development?(a)education(b)navigate life(c)confidence necessary(d)education significantly impacts healthCorrect answer is : (c)',
-            'How does Eric liu feel about health and well being?(a)education(b)navigate life(c)education significantly impacts health(d)education significantly impacts healthCorrect answer is : (c)',
-            'What does Eric liu believe education does?(a)education(b)empower individuals(c)confidence necessary(d)education significantly impacts healthCorrect answer is : (b)'
-                ]
+            final_questions = post_mca_questions(text_input, s2v, num_questions=10)
+            # final_questions = [
+            # 'What plays a pivotal role in shaping the trajectory of human development?(a)education(b)navigate life(c)confidence necessary(d)educationCorrect answer is : (d)',
+            # 'What does Eric liu believe education is intrinsically linked to?(a)education(b)navigate life(c)navigate life(d)education significantly impacts healthCorrect answer is : (c)',
+            # 'What does Eric liu believe is the most important factor in human development?(a)education(b)navigate life(c)confidence necessary(d)education significantly impacts healthCorrect answer is : (c)',
+            # 'How does Eric liu feel about health and well being?(a)education(b)navigate life(c)education significantly impacts health(d)education significantly impacts healthCorrect answer is : (c)',
+            # 'What does Eric liu believe education does?(a)education(b)empower individuals(c)confidence necessary(d)education significantly impacts healthCorrect answer is : (b)'
+            #     ]
             print("Generated MCQs:", final_questions)
 
             # Store final_questions in session

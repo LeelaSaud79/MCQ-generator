@@ -13,6 +13,7 @@
         .container {
             display: flex;
             height: 100%;
+            position: relative; /* Added relative positioning */
         }
         .left-half {
             width: 50%;
@@ -60,9 +61,19 @@
         .btn:hover {
             background-color: #0056b3;
         }
+        .mcq-image {
+            position: absolute; /* Added absolute positioning */
+            top: 0px; /* Adjusted top position */
+            right: 20px; /* Adjusted right position */
+            z-index: 999; /* Set a high z-index to ensure it's above other content */
+        }
+       
+
     </style>
 </head>
 <body>
+   
+
     <div class="container">
         <div class="left-half">
             <img src="{{ url_for('static', filename='AI.jpg') }}" alt="Image">
@@ -76,6 +87,7 @@
                 </form>
             </div>
         </div>
+        <img src="{{ url_for('static', filename='mcq.jpg') }}" class="mcq-image" width="100" height="100" alt="Image">
     </div>
 </body>
 </html>

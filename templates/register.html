@@ -6,6 +6,18 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <title>User Registration</title>
+    <style>
+         body {
+            background-color: #f0f0f0; /* Change background color to light gray */
+        }
+        .registration-box {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 50px;
+            background-color: #fff;
+        }
+    </style>
     <script>
         function validateForm() {
             var username = document.getElementById("username").value;
@@ -35,34 +47,37 @@
             return true;
         }
     </script>
-    
 </head>
 <body>
     <div class="container">
-        <h2>User Registration</h2>
-        
-        <!-- Error alert for "Already Registered" -->
-        {% if error %}
-        <div class="alert alert-danger" role="alert">
-            {{ error }}
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="registration-box">
+                    <h2>User Registration</h2>
+                    <!-- Error alert for "Already Registered" -->
+                    {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endif %}
+                    <form id="registerForm" action="/register" method="POST" onsubmit="return validateForm()">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" name="username" class="form-control" id="username" placeholder="Enter username">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email address</label>
+                            <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        {% endif %}
-        
-        <form id="registerForm" action="/register" method="POST" onsubmit="return validateForm()">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" name="username" class="form-control" id="username" placeholder="Enter username">
-            </div>
-            <div class="form-group">
-                <label for="email">Email address</label>
-                <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" class="form-control" id="password" placeholder="Password">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
     </div>
 </body>
 </html>

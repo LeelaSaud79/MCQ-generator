@@ -20,10 +20,19 @@
         .passed {
             color: green;
         }
-        .score {
-            position: absolute;
+        .card {
+            width: 300px; /* Adjust card width as needed */
+            position: fixed;
             top: 10px;
             right: 10px;
+            z-index: 999; /* Ensure card is on top */
+        }
+        .card-img-top {
+            max-width: 100%; /* Ensure image fits within card */
+            height: 50%; /* Maintain aspect ratio */
+        }
+        .card-text {
+            text-align: center; /* Center-align text */
         }
     </style>
 </head>
@@ -43,13 +52,21 @@
         <p>Result: {% if result == "Correct" %}<span class="correct">Correct</span>{% else %}<span class="incorrect">Incorrect</span>{% endif %}</p>
     </div>
     {% endfor %}
-    <p class="score">
-        {% if percentage < 40 %}
-            <span class="failed">SCORE: {{ percentage|round|int }}% Failed</span>
-        {% else %}
-            <span class="passed">SCORE: {{ percentage|round|int }}% Passed</span>
-        {% endif %}
-    </p>
+    <div class="card" style="width: 18rem;">
+        <img src="{{ url_for('static', filename='score.jpg') }}" class="card-img-top" alt="image">
+        <div class="card-body">
+          <h5 class="card-title" style="text-align: centre; font-size: 24px">Result</h5>
+          <p class="card-text">
+              {% if percentage < 40 %}
+                  <span class="failed">SCORE: {{ percentage|round|int }}% Failed</span>
+              {% else %}
+                  <span class="passed">SCORE: {{ percentage|round|int }}% Passed</span>
+              {% endif %}
+          </p>
+          <a href="/index" class="btn btn-primary" style="display: block; text-align: center;">Retry Quiz</a>
+        </div>
+      </div>
+      
     <a href="/index">Back to Home</a>
 </body>
 </html>
