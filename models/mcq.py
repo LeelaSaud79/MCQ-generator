@@ -164,6 +164,7 @@ def post_mca_questions(context: str, s2v, num_questions: int = 5):
     summarized_text = summarizer(context, summary_model, summary_tokenizer)
     imp_keywords = post_keywords(context)
     output_list = []
+    
     for answer in imp_keywords:
         output = ""
         ques = post_question(summarized_text, answer, question_model, question_tokenizer)
@@ -171,7 +172,6 @@ def post_mca_questions(context: str, s2v, num_questions: int = 5):
         output = output + ques + "\n"
         if len(distractors) == 0:
             distractors = imp_keywords
-            print(distractors)
         if len(distractors) > 0:
             random_integer = random.randint(0, 3)
             alpha_list = ['(a)', '(b)', '(c)', '(d)']

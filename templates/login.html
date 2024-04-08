@@ -10,8 +10,6 @@
         body{
             background-color: #f0f0f0;
         }
-
-        }
         .vh-100 {
             margin-top: 100px; /* Adjust the value as needed */
            
@@ -57,10 +55,6 @@
                         </div>
                         {% endif %}
 
-                        <div class="d-flex justify-content-between align-items-center">
-                            <a href="#!" class="text-body">Forgot password?</a>
-                        </div>
-
                         <div class="text-center text-lg-start mt-4 pt-2">
                             <button type="submit" class="btn btn-primary btn-lg"
                                 style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
@@ -81,33 +75,29 @@
     <script>
         function validateForm() {
             var username = document.getElementById("username").value;
-            var email = document.getElementById("email").value;
             var password = document.getElementById("password").value;
-    
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}\-{:;"'?/>.<,]).{8,}$/;
+
             if (username.trim() === "") {
-                alert("Username cannot be blank");
+                alert("Email address is required");
+                return false;
+            } else if (!emailRegex.test(username)) {
+                alert("Please enter a valid email address");
                 return false;
             }
-    
-            if (!/\D/.test(username)) {
-                alert("Username must contain at least one non-numeric character");
-                return false;
-            }
-    
-            if (email.trim() === "") {
-                alert("Email address cannot be blank");
-                return false;
-            }
-    
+
             if (password.trim() === "") {
-                alert("Password cannot be blank");
+                alert("Password is required");
+                return false;
+            } else if (!passwordRegex.test(password)) {
+                alert("Password must be at least 8 characters long and contain at least one digit, one lowercase letter, one uppercase letter, and one special character");
                 return false;
             }
-    
+
             return true;
         }
     </script>
-    
 </body>
 
 </html>
