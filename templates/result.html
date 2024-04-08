@@ -11,11 +11,18 @@
                 display: none;
             }
         }
+
+        .timer {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
     </style>
 </head>
 <body>
     <h1>Result</h1>
-    <form method="post" action="/view_answer">
+    <div class="timer" id="timer"></div> <!-- Timer display -->
+    <form id="quizForm" method="post" action="/view_answer">
         {% for i, (question, options, correct_answer) in enumerate(questions) %}
         <div class="question">
             <p>{{ question }}</p>
@@ -28,12 +35,30 @@
         {% endfor %}
         <button type="submit">View Correct Answers</button>
         <button id="downloadButton" onclick="downloadPDF()">Download as PDF</button>
-    
-        <script>
-            function downloadPDF() {
-                window.print();
-            }
-        </script>
     </form>
+
+    <script>
+        function downloadPDF() {
+            window.print();
+        }
+
+        // Timer function
+        var timerDisplay = document.getElementById('timer');
+        var questionsCount = {{ questions|length }};
+        var totalDuration = questionsCount * 120; // 2 minutes per question
+        var timeLeft = totalDuration;
+        var minutes, seconds;
+        var countdown = setInterval(function() {
+            minutes = Math.floor(timeLeft / 60);
+            seconds = timeLeft % 60;
+            timerDisplay.textContent = 'Time Left: ' + (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+            timeLeft--;
+
+            if (timeLeft < 0) {
+                clearInterval(countdown);
+                document.getElementById('quizForm').submit(); // Submit the form
+            }
+        }, 1000); // Update every second
+    </script>
 </body>
 </html>
