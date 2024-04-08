@@ -1,41 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Result</title>
     <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            position: relative;
+            /* Ensure proper positioning of buttons */
+        }
+
+        h1 {
+            text-align: left;
+            /* Fixed typo */
+            margin-top: 20px;
+            margin-bottom: 20px;
+            color: darkblue;
+        }
+
+        .quiz-container {
+            width: 50%;
+            position: relative;
+            /* Ensure proper positioning of buttons */
+        }
+
+        .card {
+            width: 70%;
+            padding: 15px;
+            margin-bottom: 20px;
+            margin-left: 15px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            font-size: 18px;
+            /* Adjust as needed */
+        }
+
         @media print {
+
             #downloadButton,
             button[type="submit"] {
                 display: none;
             }
         }
 
-        .timer {
+        .timer-container {
             position: absolute;
             top: 10px;
             right: 10px;
+            background-color: #f2f2f2;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px 20px;
+        }
+
+        .timer {
+            font-size: 24px;
+            color: red;
+        }
+
+        /* Styling for buttons */
+        button[type="submit"] {
+            background-color: blue;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            /* Create space between buttons */
+        }
+
+        #downloadButton {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            /* Ensure it's above other content */
         }
     </style>
 </head>
+
 <body>
-    <h1>Result</h1>
-    <div class="timer" id="timer"></div> <!-- Timer display -->
-    <form id="quizForm" method="post" action="/view_answer">
-        {% for i, (question, options, correct_answer) in enumerate(questions) %}
-        <div class="question">
-            <p>{{ question }}</p>
-            {% for j, option in enumerate(options) %}
-            <input type="radio" id="option_{{ i }}_{{ j }}" name="question_{{ i }}" value="{{ option }}"> 
-            <label for="option_{{ i }}_{{ j }}">{{ option }}</label><br>
-            {% endfor %}
+    <h1>Examine Yourself</h1>
+    <div class="quiz-container">
+        <div class="timer-container">
+            Time Left:
+            <div class="timer" id="timer"></div> <!-- Timer display -->
         </div>
-        <br>
-        {% endfor %}
-        <button type="submit">View Correct Answers</button>
-        <button id="downloadButton" onclick="downloadPDF()">Download as PDF</button>
-    </form>
+        <form id="quizForm" method="post" action="/view_answer">
+            {% for i, (question, options, correct_answer) in enumerate(questions) %}
+            <div class="card">
+                <div class="question">
+                    <p>Question {{ i + 1 }}: {{ question }}</p>
+                    {% for j, option in enumerate(options) %}
+                    <input type="radio" id="option_{{ i }}_{{ j }}" name="question_{{ i }}" value="{{ option }}">
+                    <label for="option_{{ i }}_{{ j }}">{{ option }}</label><br>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+            <button id="viewAnswerButton" type="submit">View Correct Answers</button>
+            <button id="downloadButton" onclick="downloadPDF()">Download as PDF</button>
+        </form>
+    </div>
 
     <script>
         function downloadPDF() {
@@ -44,14 +128,14 @@
 
         // Timer function
         var timerDisplay = document.getElementById('timer');
-        var questionsCount = {{ questions|length }};
-        var totalDuration = questionsCount * 120; // 2 minutes per question
+        var questionsCount = {{ questions| length }};
+        var totalDuration = questionsCount * 30; // 2 minutes per question
         var timeLeft = totalDuration;
         var minutes, seconds;
-        var countdown = setInterval(function() {
+        var countdown = setInterval(function () {
             minutes = Math.floor(timeLeft / 60);
             seconds = timeLeft % 60;
-            timerDisplay.textContent = 'Time Left: ' + (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+            timerDisplay.textContent = (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
             timeLeft--;
 
             if (timeLeft < 0) {
@@ -61,4 +145,5 @@
         }, 1000); // Update every second
     </script>
 </body>
+
 </html>
