@@ -14,12 +14,10 @@
             margin: 0;
             padding: 20px;
             position: relative;
-            /* Ensure proper positioning of buttons */
         }
 
         h1 {
             text-align: left;
-            /* Fixed typo */
             font-family: Arial, Helvetica, sans-serif;
             padding-right: 150px;
             margin-top: 20px;
@@ -31,7 +29,6 @@
         .quiz-container {
             width: 50%;
             position: relative;
-            /* Ensure proper positioning of buttons */
         }
 
         .card {
@@ -46,7 +43,6 @@
 
         .question {
             font-size: 18px;
-            /* Adjust as needed */
         }
 
         @media print {
@@ -72,7 +68,6 @@
             color: red;
         }
 
-        /* Styling for buttons */
         button[type="submit"] {
             background-color:#007bff ;
             color: white;
@@ -81,7 +76,6 @@
             border-radius: 5px;
             cursor: pointer;
             margin-right: 10px;
-            /* Create space between buttons */
         }
 
         #downloadButton {
@@ -95,7 +89,6 @@
             bottom: 20px;
             right: 20px;
             z-index: 999;
-            /* Ensure it's above other content */
         }
     </style>
 </head>
@@ -132,7 +125,7 @@
         // Timer function
         var timerDisplay = document.getElementById('timer');
         var questionsCount = {{ questions| length }};
-        var totalDuration = questionsCount * 30; // 2 minutes per question
+        var totalDuration = questionsCount * 30; 
         var timeLeft = totalDuration;
         var minutes, seconds;
         var countdown = setInterval(function () {

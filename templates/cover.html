@@ -1,29 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cover Page</title>
     <style>
-        body, html {
+        body,
+        html {
             height: 100%;
             margin: 0;
-            font-family: Arial, sans-serif; /* Changed font to Arial */
+            font-family: Arial, sans-serif;
         }
+
         .container {
             display: flex;
             height: 100%;
-            position: relative; /* Added relative positioning */
+            position: relative;
         }
+
         .left-half {
             width: 50%;
             background-size: cover;
             background-position: center;
         }
+
         .left-half img {
-            width: 100%; /* Set the width to 50% of its container */
-           height: 100%; /* Automatically adjust the height to maintain aspect ratio */
-          }
+            width: 100%;
+            height: 100%;
+        }
+
         .right-half {
             width: 50%;
             display: flex;
@@ -31,48 +37,52 @@
             justify-content: center;
             text-align: center;
         }
+
         .content {
             padding: 20px;
         }
+
         .content h1 {
-            font-size: 5rem; /* Changed font size */
-            font-weight: bold; /* Corrected font weight */
-            font-family: Helvetica, Arial, sans-serif; /* Added Arial */
+            font-size: 5rem;
+            font-weight: bold;
+            font-family: Helvetica, Arial, sans-serif;
             color: darkblue;
-            margin-bottom: 2rem; /* Adjusted margin */
+            margin-bottom: 2rem;
         }
+
         .content p {
-            font-size: 1.125rem; /* Changed font size */
+            font-size: 1.125rem;
             font-weight: bold;
             margin-bottom: 20px;
         }
+
         .btn {
-            padding: 0.75rem 1.5rem; /* Adjusted padding */
-            font-size: 1.125rem; /* Changed font size */
+            padding: 0.75rem 1.5rem;
+            font-size: 1.125rem;
             background-color: #007bff;
             color: #fff;
             border: none;
-            border-radius: 15px; /* Added border-radius */
+            border-radius: 15px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            text-decoration: none; /* Corrected button appearance */
-            display: inline-block; /* Corrected button appearance */
+            text-decoration: none;
+            display: inline-block;
         }
-        .btn:hover {
-            background-color: #0056b3;
-        }
-        .mcq-image {
-            position: absolute; /* Added absolute positioning */
-            top: 0px; /* Adjusted top position */
-            right: 20px; /* Adjusted right position */
-            z-index: 999; /* Set a high z-index to ensure it's above other content */
-        }
-       
+            .btn:hover {
+                background-color: #0056b3;
+            }
 
+            .mcq-image {
+                position: absolute;
+                top: 0px;
+                right: 20px;
+                z-index: 999;
+            }
     </style>
 </head>
+
 <body>
-   
+
 
     <div class="container">
         <div class="left-half">
@@ -81,7 +91,7 @@
         <div class="right-half">
             <div class="content">
                 <h1>Create Different Multiple Choice Questions in One Click</h1>
-                <p>For teachers, schools, and HR</p><br> <!-- Corrected spacing -->
+                <p>For teachers, schools, and HR</p><br>
                 <form action="/login" method="GET">
                     <button type="submit" class="btn">Click Here and Enjoy</button>
                 </form>
@@ -90,4 +100,5 @@
         <img src="{{ url_for('static', filename='mcq.jpg') }}" class="mcq-image" width="100" height="100" alt="Image">
     </div>
 </body>
+
 </html>
