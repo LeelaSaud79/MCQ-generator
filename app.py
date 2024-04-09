@@ -1,12 +1,15 @@
 from sense2vec import Sense2Vec
+from dotenv import load_dotenv
 import os
+# Load environment variables from .env file
+load_dotenv()
 from flask_limiter import Limiter
 from models.mcq import post_mca_questions
 import csv
 from flask import Flask, request, jsonify, render_template, session, redirect
 import sqlite3
 from utils.db_helper import UserDatabase
-db =  UserDatabase(host="localhost", user="root", password="", database="project")
+db =  UserDatabase(host=os.getenv("DATABASE_URL"), user=os.getenv("DB"), password=os.getenv("PASSWORD"), database=os.getenv("DATABASE"))
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'  # Set a secret key for session management

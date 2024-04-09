@@ -41,7 +41,7 @@ class UserDatabase:
     def check_user(self, email, password):
         self.connect()
         c = self.conn.cursor()
-        c.execute("SELECT * FROM users WHERE email = %s AND password = %s", (email, password))
+        c.execute(f"SELECT * FROM users WHERE email ='{email}'")
         user = c.fetchall()
         self.disconnect()
         return user
