@@ -73,19 +73,19 @@
 
     <script>
         function validateForm() {
-            var username = document.getElementById("username").value;
+            var email = document.getElementById("email").value;
             var password = document.getElementById("password").value;
             var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}\-{:;"'?/>.<,]).{8,}$/;
-
-            if (username.trim() === "") {
+    
+            if (email.trim() === "") {
                 alert("Email address is required");
                 return false;
-            } else if (!emailRegex.test(username)) {
+            } else if (!emailRegex.test(email)) {
                 alert("Please enter a valid email address");
                 return false;
             }
-
+    
             if (password.trim() === "") {
                 alert("Password is required");
                 return false;
@@ -93,10 +93,11 @@
                 alert("Password must be at least 8 characters long and contain at least one digit, one lowercase letter, one uppercase letter, and one special character");
                 return false;
             }
-
+    
             return true;
         }
     </script>
+    
 </body>
 
 </html>

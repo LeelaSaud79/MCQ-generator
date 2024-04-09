@@ -20,16 +20,10 @@
     </style>
    <script>
     function validateForm() {
-        var username = document.getElementById("username").value;
         var email = document.getElementById("email").value;
         var password = document.getElementById("password").value;
         var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}\-{:;"'?/>.<,]).{8,}$/;
-
-        if (username.trim() === "") {
-            alert("Username is required");
-            return false;
-        }
 
         if (email.trim() === "") {
             alert("Email address is required");
@@ -50,6 +44,7 @@
         return true;
     }
 </script>
+
 </head>
 <body>
     <div class="container">

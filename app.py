@@ -155,6 +155,14 @@ def view_answer():
     percentage = correct_count/count*100 
     return render_template("view_answer.html", zipped_data=correct_answers, percentage=percentage)
 
+# @app.route("/logout")
+# def logout():
+#     session.clear()  # Clear the session data
+#     return redirect("/login")  # Redirect the user to the login page after logout
+@app.route("/logout")
+def logout_confirmation():
+    return render_template("logout.html")
+
 
 if __name__ == '__main__':
     db.create_table()
