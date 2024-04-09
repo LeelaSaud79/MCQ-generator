@@ -119,7 +119,11 @@
 
     <script>
         function downloadPDF() {
+            // Hide the timer display before printing
+            document.querySelector('.timer-container').style.display = 'none';
             window.print();
+            // Show the timer display again after printing
+            document.querySelector('.timer-container').style.display = 'block';
         }
 
         // Timer function

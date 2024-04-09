@@ -92,6 +92,8 @@ def index():
 @app.route("/submit", methods=["POST", "GET"])
 def submit():
     global parsed_questions 
+    if request.method =="GET":
+        return render_template("result.html", questions=parsed_questions)
     if request.method == "POST":
         text_input = request.form.get("textInput")
         print("Received text input:", text_input)

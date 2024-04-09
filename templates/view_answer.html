@@ -171,7 +171,18 @@
                         <span class="passed">SCORE: {{ percentage|round|int }}% Passed</span>
                         {% endif %}
                 </p>
-                <a href="/index" class="btn btn-primary" style="display: block; text-align: center">Retry Quiz</a>
+                <a id="retryQuizBtn" class="btn btn-primary" style="display: block; text-align: center">Retry Quiz</a>
+
+                <script>
+                    document.getElementById('retryQuizBtn').addEventListener('click', function() {
+                        var form = document.createElement('form');
+                        form.method = 'get';
+                        form.action = '/submit';
+                        document.body.appendChild(form);
+                        form.submit();
+                    });
+                </script>
+
             </div>
         </div>
     </div>
