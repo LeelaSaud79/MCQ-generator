@@ -181,7 +181,10 @@ def post_mca_questions(context: str, s2v, num_questions: int = 5):
                 elif distractor!=answer:
                     output = output + alpha_list[d] + distractor + "\n"
                 else:
-                    output = output + alpha_list[d] + distractors[5] + "\n"
+                    try:
+                        output = output + alpha_list[d] + distractors[5] + "\n"
+                    except:
+                        output = output + alpha_list[d] + "None Of the Above"+ "\n"
             output = output + "Correct answer is : " + alpha_list[random_integer] + "\n\n"
         output_list.append(output)
         if len(output_list) == num_questions:
