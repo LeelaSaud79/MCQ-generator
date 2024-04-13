@@ -165,12 +165,12 @@
             <img src="{{ url_for('static', filename='score.jpg') }}" class="card-img-top" alt="image" />
             <div class="card-body">
                 <h5 class="card-title">Result</h5>
-                <p class="card-text">
+                <!-- <p class="card-text">
                     {% if percentage < 40 %} <span class="failed">SCORE: {{ percentage|round|int }}% Failed</span>
                         {% else %}
                         <span class="passed">SCORE: {{ percentage|round|int }}% Passed</span>
                         {% endif %}
-                </p>
+                </p> -->
                 <a id="retryQuizBtn" class="btn btn-primary" style="display: block; text-align: center">Retry Quiz</a>
 
                 <script>
